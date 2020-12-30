@@ -1,0 +1,13 @@
+## Interface: 90001
+## Version: 2.1
+## Title: AkiTools
+## Author: Akinos
+## SavedVariables: AkiDB
+## Notes-zhCN: 战斗事件通报助手
+
+Base.lua
+Data.lua
+Functions.lua
+Events.lua
+Config.lua
+Command.lua
