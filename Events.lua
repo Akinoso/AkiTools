@@ -28,13 +28,15 @@ end
 frame:RegisterEvent('MERCHANT_SHOW')
 function frame:MERCHANT_SHOW( ) 
 	local num = 0
+	local price = 0
 	if DB.autoSell then
 		for bag = 0, NUM_BAG_FRAMES do
 			for slot = 1, GetContainerNumSlots(bag) do
 				local itemId = GetContainerItemID(bag,slot)
 				if itemId then 
-					local _, _, itemRarity = GetItemInfo(itemId)
+					local _, _, itemRarity, _, _, _, _, _, _, _, itemSellPrice = GetItemInfo(itemId)
 					if itemRarity == 0 then
+						price = price + itemSellPrice
 						UseContainerItem(bag,slot)
 						num = num +1
 					end 
@@ -42,10 +44,28 @@ function frame:MERCHANT_SHOW( )
 			end
 		end
 		if (num > 0) then
-			print('Aki已为您自动售卖灰色物品['..num..']')
+			print('Aki已为您自动售卖['..num..']件灰色物品，获得['..GetCoinTextureString(price)..']')
+		end
+	end
+	
+	if DB.autoRepair then
+		if CanMerchantRepair() then	
+			repairAllCost, canRepair = GetRepairAllCost();
+			if (canRepair and repairAllCost > 0) then
+				if CanGuildBankRepair() then
+					RepairAllItems(true)
+					print('Aki已为您自动修理所有装备，工会修理费['..GetCoinTextureString(repairAllCost)..']')
+				elseif repairAllCost <= GetMoney() then
+					RepairAllItems(false)
+					print('Aki已为您自动修理所有装备，修理费['..GetCoinTextureString(repairAllCost)..']')
+				elseif repairAllCost > GetMoney() then
+					print('Aki想为您自动使用修理，但您太穷了，连修理费都付不起。')
+				end
+			end
 		end
 	end
 end
+
 
 -- 战斗日志
 frame:RegisterEvent('COMBAT_LOG_EVENT_UNFILTERED')

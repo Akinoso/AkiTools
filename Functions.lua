@@ -101,7 +101,7 @@ function Aki:GetConfig(k)
 		cfg = Aki:CopyTable(DB.solo)
 	end
 	local channel = cfg[k]
-	if IsOutdoors() and channel == 'say' or channel == 'yell' then
+	if IsOutdoors() and (channel == 'say' or channel == 'yell') then
 		channel = 'self'
 	end
 	local sound = cfg[k..'Sound']

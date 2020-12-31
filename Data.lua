@@ -1,6 +1,7 @@
 -- 初始设置
 Aki.DB = {
 	autoSell = true,
+	autoRepair = true,
 	solo = {
 		ownInterrupt = 'self',
 		ownInterruptSound = '',

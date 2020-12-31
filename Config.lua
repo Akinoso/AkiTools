@@ -660,6 +660,14 @@ function panel:Initialize()
 		function(v) DB.autoSell = v end,
 		true)
 	autoSellEnabled:SetPoint('TOPLEFT', raid, 'BOTTOMLEFT', 0, -190)
+
+-- 是否开启自动修理
+	local autoRepairEnabled = self:CreateCheckBox(
+		'自动修理',
+		function() return DB.autoRepair end,
+		function(v) DB.autoRepair = v end,
+		true)
+	autoRepairEnabled:SetPoint('TOPLEFT', raid, 'BOTTOMLEFT', 0, -210)
 end
 
 --面板初始化
