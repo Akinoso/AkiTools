@@ -82,3 +82,9 @@ Aki.soundList = {
 	644480, 'Swoosh',
 	539153, 'Whistle',
 }
+
+-- 驱散光环黑名单
+Aki.blackList = {
+	[166646] = true,
+	[32223] = true,
+}

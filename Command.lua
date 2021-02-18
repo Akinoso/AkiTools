@@ -8,8 +8,8 @@ SlashCmdList['AKI'] = function(msg)
 	if command=="test" then
 		print('test')
 	else
-		InterfaceOptionsFrame_OpenToCategory('AkiTools_S')
-		InterfaceOptionsFrame_OpenToCategory('AkiTools_S')
+		InterfaceOptionsFrame_OpenToCategory('AkiTools')
+		InterfaceOptionsFrame_OpenToCategory('AkiTools')
 
 	end
 end

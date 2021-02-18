@@ -1,5 +1,6 @@
 local DB = Aki.DB
 local frame = Aki.frame
+local blackList = Aki.blackList
 
 -- 事件处理统一模版
 frame:SetScript('OnEvent', function(self, event, ...)
@@ -93,16 +94,18 @@ function frame:COMBAT_LOG_EVENT_UNFILTERED( ...)
 
 		elseif suffix == 'DISPEL' then
 			local extraSpellId, extraSpellName, extraSchool, auraType = select(15, CombatLogGetCurrentEventInfo())
-			if sourceName == UnitName('player')  or sourceName == UnitName('pet')then
-				local c, s = Aki:GetConfig('ownDispel')
-				Aki:Announce(c, '驱 → '..GetSpellLink(extraSpellId), s)
-			elseif Aki:IsInMyGroup(sourceFlags) then
-				local name = Aki:ShortName(sourceName)
-				local c, s = Aki:GetConfig('otherDispel')
-				if c == 'self' and Aki:IsPlayer(sourceFlags) then
-					name = Aki:ClassColor(name)
+			if not blackList[extraSpellId] then
+				if sourceName == UnitName('player')  or sourceName == UnitName('pet')then
+					local c, s = Aki:GetConfig('ownDispel')
+					Aki:Announce(c, '驱 → '..GetSpellLink(extraSpellId), s)
+				elseif Aki:IsInMyGroup(sourceFlags) then
+					local name = Aki:ShortName(sourceName)
+					local c, s = Aki:GetConfig('otherDispel')
+					if c == 'self' and Aki:IsPlayer(sourceFlags) then
+						name = Aki:ClassColor(name)
+					end
+					Aki:Announce(c, '['..name..']驱 → '..GetSpellLink(extraSpellId), s)
 				end
-				Aki:Announce(c, '['..name..']驱 → '..GetSpellLink(extraSpellId), s)
 			end
 
 		elseif suffix == 'STOLEN' then
